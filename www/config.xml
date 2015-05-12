@@ -1,5 +1,5 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.phonegap.easycalculator" version="1.0.0">
-  <name>pruebapp</name>
+  <name>Easy Calculator</name>
   <description>Just That, and easy way to calculate.</description>
   <author href="#" email="support@phonegap.com">Sancocho de Ideas</author>
   <content src="index.html"/>
