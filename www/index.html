@@ -1,0 +1,400 @@
+<!doctype html>
+<!--[if IE 7 ]>    <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en-gb" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <!--[if lt IE 9]> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <title>Easy Calculator</title>
+    <meta name="description" content="">
+    <meta name="author" content="Khamos85">
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+		<script type="text/javascript" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"></script>
+	<![endif]-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/isotope.css" media="screen" />
+    <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/da-slider.css" />
+    <!-- Owl Carousel Assets -->
+    <link href="js/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/pruebapp.css" />
+    <!-- Font Awesome -->
+    <link href="font/css/font-awesome.min.css" rel="stylesheet">
+
+<script language="javascript" type="text/javascript">
+//CALCULADORA SIMPLE
+//Version: 1 (5/12/1999)
+//Iván Nieto Pérez
+//Este script y otros muchos pueden
+//descarse on-line de forma gratuita
+//en El Código: www.elcodigo.com
+
+var OpA
+var OpB
+var Operador
+var Memoria = 0
+
+var Escribiendo
+var HayOperandoA
+var HayResultado
+var ACero
+
+function BorraDisplay() {
+  
+  //borra el display
+  document.FormCalc.Display.value = "0"
+  document.FormCalc.Indicador.value = "  "
+  
+  //inicializa variables
+  OpA = 0
+  OpB = 0
+
+  //actualiza flags
+  Escribiendo = false
+  HayOperandoA = false
+  HayResultado = false
+  ACero = true
+}
+
+function ObtieneOperador(FormCalc, Digito) {
+
+  //si hay operando A y no hay resultado puede calcular ya
+  if ( HayOperandoA && (!HayResultado) )
+    Calcula(FormCalc)
+
+  //obtiene el operador a utilizar
+  Operador = Digito
+
+  //borra el indicador de signo antiguo y pone el nuevo
+  FormCalc.Indicador.value = FormCalc.Indicador.value.substring(0,1)
+  FormCalc.Indicador.value += " " + Digito
+
+  //guarda operando A
+  OpA = FormCalc.Display.value
+
+  //actualiza flags
+  Escribiendo = false
+  HayOperandoA = true
+  HayResultado = false
+  ACero = false
+}
+
+function Calcula(FormCalc) {
+  //realiza la operacion y escribe el resultado
+
+  //borra el indicador
+  FormCalc.Indicador.value = FormCalc.Indicador.value.substring(0,1)
+
+  //guarda operando B
+  OpB = "(" + FormCalc.Display.value +")"   //los parentesis evitan error A - -B
+
+  //obtiene string de operacion
+  var Operacion = new String()
+  Operacion = OpA + Operador + OpB
+
+  //evalua string
+  Resultado = eval(Operacion)
+
+  //escribe el resultado y se lo asigna al operando A
+  FormCalc.Display.value = Resultado
+  OpA = FormCalc.Display.value
+
+  //actualiza flags
+  Escribiendo = false
+  HayOperandoA = true
+  HayResultado = true
+  ACero = false
+}
+
+function EscribeDigito(FormCalc, Digito) {
+  //escribe un digito en el formulario
+  if (Escribiendo)
+    FormCalc.Display.value += Digito
+  else {
+    FormCalc.Display.value = Digito
+    Escribiendo = true
+    ACero = false
+  }
+}
+
+function CambiaSigno(FormCalc) {
+  //cambia el signo del display
+  if (ACero)
+    return
+  else {
+    if (FormCalc.Display.value.substring(0,1) == '-')
+      FormCalc.Display.value = FormCalc.Display.value.substring(1, FormCalc.Display.value.length)
+    else
+      FormCalc.Display.value = '-' + FormCalc.Display.value
+  }
+}
+
+function GuardaMemoria(FormCalc) {
+  Memoria += eval(FormCalc.Display.value)
+  FormCalc.Indicador.value = "M" + FormCalc.Indicador.value.substring(1,3)
+}
+
+function RecuerdaMemoria(FormCalc) {
+  FormCalc.Display.value = Memoria
+}
+
+function BorraMemoria(FormCalc) {
+  Memoria = 0
+  FormCalc.Indicador.value = " " +  FormCalc.Indicador.value.substring(1,3)
+}
+
+window.onload = BorraDisplay
+if (document.captureEvents) {     //N4 requiere invocar la funcion captureEvents
+  document.captureEvents(Event.LOAD)
+}
+
+</script>
+
+</head>
+
+<body>
+ <header class="header">
+     <div class="container">
+         <nav class="navbar navbar-inverse" role="navigation">
+             <div class="navbar-header">
+                 <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                 </button>
+                 <a href="#" class="navbar-brand scroll-top logo"><b>Easy Calculator</b></a>
+             </div>
+             <!--/.navbar-header-->
+             <div id="main-nav" class="collapse navbar-collapse">
+                 <ul class="nav navbar-nav" id="mainNav">
+                     <!-- <li class="active"><a href="#home" class="scroll-link"></a></li> -->
+                     <li><a href="#howTo" class="scroll-link">How To</a></li>
+                     <li><a href="#contactUs" class="scroll-link">Contact Us</a></li>
+                 </ul>
+             </div>
+             <!--/.navbar-collapse-->
+         </nav>
+         <!--/.navbar-->
+     </div>
+     <!--/.container-->
+ </header>
+ <!--/.header-->
+ <div id="#top"></div>
+ <section id="home">
+  <div class="calculator row">
+   <form name="FormCalc">
+  <div class="table-responsive">
+    <input class="btn-lg col-xs-12" name="Display" type="text" readonly="true">
+    <table class="table">
+    <tr>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton7"
+      value=" 7 " onClick="EscribeDigito(this.form, '7')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton8"
+      value=" 8 " onClick="EscribeDigito(this.form, '8')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton9"
+      value=" 9 " onClick="EscribeDigito(this.form, '9')"></input></td>
+      <td><input class="btn btn-success btn-lg" type="button" name="botonDivision"
+      value=" / " onClick="ObtieneOperador(this.form, '/')"></input></td>
+      <td><input class="btn btn-info btn-lg" type="button" name="botonBorrar"
+      value="  C  " onClick="BorraDisplay(this.form)"></input></td>
+    </tr>
+    <tr>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton4"
+      value=" 4 " onClick="EscribeDigito(this.form, '4')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton5"
+      value=" 5 " onClick="EscribeDigito(this.form, '5')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton6"
+      value=" 6 " onClick="EscribeDigito(this.form, '6')"></input></td>
+      <td><input class="btn btn-success btn-lg" type="button" name="botonProducto"
+      value=" x " onClick="ObtieneOperador(this.form, '*')"></input></td>
+      <td><input class="btn btn-info btn-lg" type="button" name="botonM"
+      value="  M+ " onClick="GuardaMemoria(this.form)"></input></td>
+    </tr>
+    <tr>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton1"
+      value=" 1 " onClick="EscribeDigito(this.form, '1')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton2"
+      value=" 2 " onClick="EscribeDigito(this.form, '2')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton3"
+      value=" 3 " onClick="EscribeDigito(this.form, '3')"></input></td>
+      <td><input class="btn btn-success btn-lg" type="button" name="botonResta"
+      value=" - " onClick="ObtieneOperador(this.form, '-')"></input></td>
+      <td><input class="btn btn-info btn-lg" type="button" name="botonMR"
+      value="  MR " onClick="RecuerdaMemoria(this.form)"></input></td>
+    </tr>
+    <tr>
+      <td><input class="btn btn-default btn-lg" type="button" name="boton0"
+      value=" 0 " onClick="EscribeDigito(this.form, '0')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="botonPunto"
+      value=" . " onClick="EscribeDigito(this.form, '.')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="botonSigno"
+      value="+/-" onClick="CambiaSigno(this.form)"></input></td>
+      <td><input class="btn btn-success btn-lg" type="button" name="botonSuma"
+      value=" + " onClick="ObtieneOperador(this.form, '+')"></input></td>
+      <td><input class="btn btn-info btn-lg" type="button" name="botonMC"
+      value="  MC " onClick="BorraMemoria(this.form)"></input></td>
+    </tr>
+    <tr>
+      <td><input class="btn btn-default btn-lg" type="button" name="botonE"
+      value=" E " onClick="EscribeDigito(this.form, 'e')"></input></td>
+      <td><input class="btn btn-default btn-lg" type="button" name="botonEmenos"
+      value=" E-" onClick="EscribeDigito(this.form, 'e-')"></input></td>
+      <td> </td>
+      <td> </td>
+      <td><input class="btn btn-warning btn-lg" type="button" name="botonIgual"
+      value="  =  " onClick="Calcula(this.form)"></input></td>
+    </tr>
+  </table>
+  
+  <input class="btn btn-primary btn-lg col-xs-12" type="text" name="Indicador" readonly="true"></input>
+  
+  </div>
+</form>
+     
+  </div> <!--/.calculator-->
+ </section>
+ 
+ <!--About-->
+ <section class="col-xs-12 spacer-bottom" id="howTo" class="secPad">
+     <div class="container">
+         <div class="heading text-center">
+             <!-- Heading -->
+             <h2>Seriously?</h2>
+             <p>Ok! Suppose you are working with many big numbers and only thought of mentally add them cause you headaches. For that, you want to use a calculator.</p>
+             <p>Suppose you want to add the following amounts: 1179 + 3485 + 2130. Follow these steps to use the calculator computer:</p>
+         </div>
+         <div class="row">
+             <!-- item -->
+             <div class="col-md-4 text-center tileBox">
+                <div class="txtHead"> 
+                 <h3>Step 1:<span class="id-color">One</span></h3></div>
+                 <p>To write the numbers on the calculator to your computer you can use the number keys on the keyboard or click on the numbers on the calculator to enter the number you want to calculate, that is, 1179.</p>
+             </div>
+             <!-- end: -->
+
+             <!-- item -->
+             <div class="col-md-4 text-center tileBox">
+                 <div class="txtHead">
+                 <h3>Step 2:<span class="id-color">Two</span></h3></div>
+                 <p>Tap the plus (+) and enter the next number. In this case, 3485.</p>
+             </div>
+             <!-- end: -->
+
+             <!-- item -->
+             <div class="col-md-4 text-center tileBox">
+                 <div class="txtHead">
+                 <h3>Step 2:<span class="id-color">Three</span></h3></div>
+                 <p>Tap the plus (+) and enter the third number, that is 2130.</p>
+             </div>
+             <!-- end: -->
+         </div>
+     </div>
+ </section>
+ <!--Quote-->
+ <section id="quote" class="bg-parlex">
+     <div class="parlex-back">
+         <div class="container secPad text-center">
+	<h2>If I asked people what they wanted, they would have said ‘Faster Horses’.</h2><h3>-Henry Ford</h3>
+         </div>
+         <!--/.container-->
+     </div>
+ </section>
+
+
+
+<!--Contact -->
+ <section id="contactUs" class="page-section secPad">
+     <div class="container">
+
+         <div class="row">
+             <div class="heading text-center">
+                 <!-- Heading -->
+                 <h2>Let's Keep In Touch!</h2>
+                 <p>Thank you for using this app. If you would like to get into contact with me, please fill out the form below.</p>
+             </div>
+         </div>
+
+         <div class="row mrgn30">
+
+             <form method="post" action="" id="contactfrm" role="form">
+
+                 <div class="col-sm-4">
+                     <div class="form-group">
+                         <label for="name">Name</label>
+                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" title="Please enter your name (at least 2 characters)">
+                     </div>
+                     <div class="form-group">
+                         <label for="email">Email</label>
+                         <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" title="Please enter a valid email address">
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="form-group">
+                         <label for="comments">Comments</label>
+                         <textarea name="comment" class="form-control" id="comments" cols="3" rows="5" placeholder="Enter your message…" title="Please enter your message (at least 10 characters)"></textarea>
+                     </div>
+                     <button name="submit" type="submit" class="btn btn-lg btn-primary" id="submit">Submit</button>
+                     <div class="result"></div>
+                 </div>
+             </form>
+             <div class="col-sm-4">
+                 <h4>Address:</h4>
+                 <address>
+                     Somewhere<br>
+                     You'll never can <br>
+                     reach me!
+                     <br>
+                     But you can
+                 </address>
+                 <h4>Call me:</h4>
+                 <address>
+                     3178869815<br>
+                 </address>
+             </div>
+         </div>
+     </div>
+     <!--/.container-->
+ </section>
+ <footer>
+     <div class="container">
+         <div class="social text-center">
+             <a href="https://twitter.com/khamos"><i class="fa fa-twitter"></i></a>
+             <a href="https://www.facebook.com/gabriel.gray.9699"><i class="fa fa-facebook"></i></a>
+             <a href="https://github.com/khamos85"><i class="fa fa-github"></i></a>
+         </div>
+
+         <div class="clear"></div>
+         <!--CLEAR FLOATS-->
+     </div>
+ </footer>
+ <!--/.page-section-->
+
+ <a href="#top" class="topHome"><i class="fa fa-chevron-up fa-2x"></i></a>
+
+<!--[if lte IE 8]><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><![endif]-->
+<script src="js/modernizr-latest.js"></script>
+<script src="js/easy-calculator.js" type="text/javascript"></script>
+<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.isotope.min.js" type="text/javascript"></script>
+<script src="js/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+<script src="js/jquery.nav.js" type="text/javascript"></script>
+<script src="js/jquery.cslider.js" type="text/javascript"></script>
+<script src="js/custom.js" type="text/javascript"></script>
+<script src="js/owl-carousel/owl.carousel.js"></script>
+
+</body>
+</html>

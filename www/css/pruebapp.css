@@ -1,0 +1,142 @@
+
+.header2 {
+    position: fixed;
+    width: 100%;
+    background: #6699FF;
+    z-index: 50;
+    border-radius: 0;
+    top: 0px;
+    border-bottom: 1px solid #F57676;
+}
+
+.calculator {
+    width: 100%;
+    position: center;
+    padding: 0px;
+    /*background: url("../images/banner-bg.jpg") no-repeat;*/
+    background-size: 100% 100%;
+    background-size: cover;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 100px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+table.no-border {
+  border: 0;
+}
+
+/*No-Internal borders in thead*/
+table .no-border th {
+  border-left: 0;
+}
+table .no-border tr th:first-child {
+  border-left: 1px solid #dadada;
+}
+/*No-Internal borders in tbody x and y*/
+table .no-border-x td {
+  border-bottom: 0;
+}
+table .no-border-x tr:last-child td {
+  border-bottom: 1px solid #dadada;
+}
+table .no-border-y td {
+  border-left: 0;
+}
+table .no-border-y tr td:first-child {
+  border-left: 1px solid #dadada;
+}
+/*No-External borders general table*/
+table.no-border tr th {
+  border-top: 0;
+}
+table.no-border tr th:first-child {
+  border-left: 0;
+}
+table.no-border tr th:last-child {
+  border-right: 0;
+}
+table.no-border tr td:first-child {
+  border-left: 0;
+}
+table.no-border tr td:last-child {
+  border-right: 0;
+}
+table.no-border tr:last-child td {
+  border-bottom: 0;
+}
+/*No-External borders when .no-padding in block*/
+.no-padding table th:first-child {
+  border-left: 0;
+}
+.no-padding table th:last-child {
+  border-right: 0;
+}
+.no-padding table tr td:first-child {
+  border-left: 0;
+}
+.no-padding table tr td:last-child {
+  border-right: 0;
+}
+.no-padding table tr:last-child td {
+  border-bottom: 0;
+}
+table tbody .toggle-details {
+  cursor: pointer;
+}
+table tbody .details {
+  background: #FFF;
+}
+table tbody td .btn {
+  margin-bottom: 0 !important;
+}
+table tbody td .btn-group .dropdown-menu {
+  margin-top: -1px;
+  min-width: 130px;
+}
+table tbody td .btn-group .dropdown-menu li > a {
+  padding: 5px 12px;
+  text-align: left;
+}
+table td .flag {
+  text-align: center;
+  padding: 0 4px;
+}
+table td .legend {
+  width: 10px;
+  height: 10px;
+  background: #efefef;
+}
+div.dataTables_length label select {
+  display: inline !important;
+}
+.table td .btn i {
+  width: inherit;
+}
+
+.spacer {
+  margin-top: 15px !important;
+}
+.spacer2 {
+  margin-top: 30px !important;
+}
+.spacer3 {
+  margin-top: 50px !important;
+}
+.spacer-bottom-xs {
+  margin-bottom: 10px !important;
+}
+.spacer-bottom {
+  margin-bottom: 30px !important;
+}
+.spacer-bottom-sm {
+  margin-bottom: 15px !important;
+}
+.spacer-bottom-lg {
+  margin-bottom: 40px !important;
+}
